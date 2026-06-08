@@ -1,0 +1,24 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const rootEl = document.getElementById('root')!;
+
+try {
+  createRoot(rootEl).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+} catch (err: any) {
+  rootEl.innerHTML = `
+    <div style="min-height:100vh;background:#07080A;display:flex;align-items:center;justify-content:center;font-family:monospace;color:#f87171;text-align:center;padding:2rem;">
+      <div>
+        <div style="font-size:2rem;margin-bottom:1rem;">💥</div>
+        <div style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#F4F4F6;">App failed to start</div>
+        <pre style="font-size:0.72rem;color:#7A7A86;max-width:500px;white-space:pre-wrap;text-align:left;background:#111218;padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.06);">\${err?.message || 'Unknown error'}</pre>
+      </div>
+    </div>
+  `;
+}
