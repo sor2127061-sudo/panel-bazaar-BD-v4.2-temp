@@ -178,7 +178,7 @@ export default function ProductDetail() {
             </p>
 
             <div style={{
-              background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.07)',
+              background: 'var(--code-bg)', border: '1px solid var(--code-border)',
               borderRadius: 14, padding: '1.25rem', marginBottom: '1.25rem', textAlign: 'left',
             }}>
               <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-mute)', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem' }}>
@@ -215,7 +215,7 @@ export default function ProductDetail() {
         <Link to="/" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
           padding: '0.5rem 0.875rem',
-          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--back-btn-bg)', border: '1px solid var(--back-btn-border)',
           borderRadius: 10, color: 'var(--text-mute)', textDecoration: 'none',
           fontSize: '0.75rem', fontWeight: 600, marginBottom: '1.5rem',
           transition: 'color 0.15s',
@@ -228,11 +228,11 @@ export default function ProductDetail() {
           {/* LEFT — Product image + description */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div style={{
-              background: 'rgba(11,12,16,0.9)', backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.06)', borderRadius: 22,
+              background: 'var(--card-bg)', backdropFilter: 'blur(16px)',
+              border: '1px solid var(--card-border)', borderRadius: 22,
               overflow: 'hidden',
             }}>
-              <div style={{ position: 'relative', aspectRatio: '16/10', background: '#07080A' }}>
+              <div style={{ position: 'relative', aspectRatio: '16/10', background: 'var(--bg-2)' }}>
                 <img
                   src={product.image_url || 'https://images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=600&auto=format&fit=crop&q=70'}
                   alt={product.name}
@@ -241,13 +241,13 @@ export default function ProductDetail() {
                 />
                 <div style={{
                   position: 'absolute', inset: 0,
-                  background: 'linear-gradient(to top, rgba(7,8,10,0.7) 0%, transparent 60%)',
+                  background: 'var(--img-overlay)',
                 }} />
                 <div style={{ position: 'absolute', top: 12, left: 12 }}>
                   <span style={{
                     padding: '0.2rem 0.65rem',
-                    background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255,255,255,0.1)', borderRadius: 999,
+                    background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255,255,255,0.15)', borderRadius: 999,
                     fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
                     color: '#10b981', fontFamily: 'var(--font-mono)',
                   }}>
@@ -265,13 +265,13 @@ export default function ProductDetail() {
                 </p>
 
                 {product.description && (
-                  <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--line)' }}>
                     <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-mute)', marginBottom: '0.75rem', fontFamily: 'var(--font-mono)' }}>
                       Description & Instructions
                     </div>
                     <div style={{
                       fontSize: '0.8rem', color: 'var(--text-mute)', lineHeight: 1.65,
-                      background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.04)',
+                      background: 'var(--desc-bg)', border: '1px solid var(--desc-border)',
                       borderRadius: 12, padding: '1rem', whiteSpace: 'pre-line',
                     }}>
                       {product.description}
@@ -293,7 +293,7 @@ export default function ProductDetail() {
                 <div key={label} style={{
                   display: 'flex', alignItems: 'center', gap: 6,
                   padding: '0.45rem 0.875rem',
-                  background: 'rgba(16,185,129,0.05)', border: '1px solid rgba(16,185,129,0.12)',
+                  background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
                   borderRadius: 999, fontSize: '0.72rem', fontWeight: 600, color: '#10b981',
                 }}>
                   {icon} {label}
@@ -310,7 +310,7 @@ export default function ProductDetail() {
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '0.875rem 1.125rem',
-                background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.18)',
+                background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
                 borderRadius: 14,
               }}>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-mute)', fontWeight: 600 }}>Your Balance</div>
@@ -343,8 +343,8 @@ export default function ProductDetail() {
                         style={{
                           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                           padding: '0.875rem 1rem',
-                          background: isSelected ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.025)',
-                          border: `1px solid ${isSelected ? 'rgba(16,185,129,0.4)' : 'rgba(255,255,255,0.07)'}`,
+                          background: isSelected ? 'var(--accent-s)' : 'var(--pkg-btn-bg)',
+                          border: `1px solid ${isSelected ? 'var(--accent-g)' : 'var(--pkg-btn-border)'}`,
                           borderRadius: 14, cursor: inStock ? 'pointer' : 'not-allowed',
                           opacity: inStock ? 1 : 0.5,
                           transition: 'all 0.18s',
@@ -392,7 +392,7 @@ export default function ProductDetail() {
             {/* Purchase summary + button */}
             {selectedPackage && (
               <div className="glass-card--static" style={{ padding: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.875rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.875rem', borderBottom: '1px solid var(--purchase-border)' }}>
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-mute)', fontWeight: 600 }}>
                     {product.name} · {selectedPackage.days} Days
                   </span>

@@ -37,7 +37,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
 }
 
 const inp: React.CSSProperties = { width: '100%', padding: '0.75rem 0.875rem', background: 'var(--input-bg)', border: '1px solid var(--line-2)', borderRadius: 11, color: 'var(--text)', fontFamily: 'var(--font-sans)', fontSize: 16, outline: 'none' };
-const ta: React.CSSProperties = { ...inp, resize: 'vertical', minHeight: 72 };
+const ta: React.CSSProperties = { ...inp, resize: 'vertical', minHeight: 160, lineHeight: 1.6, fontSize: 14 };
 const sel: React.CSSProperties = { ...inp };
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
