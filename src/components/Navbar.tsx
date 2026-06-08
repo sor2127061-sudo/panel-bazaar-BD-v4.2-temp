@@ -72,11 +72,11 @@ export default function Navbar() {
       <nav className={`app-nav ${scrolled ? 'app-nav--scrolled' : ''} ${hidden ? 'app-nav--hidden' : ''}`}>
         <div className="nav-inner">
           {/* Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', textDecoration: 'none', flexShrink: 0 }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}>
             {siteSettings?.site_logo_url
-              ? <img src={siteSettings.site_logo_url} alt="Logo" style={{ height: 26, width: 26, borderRadius: 6, objectFit: 'cover' }} />
-              : <div style={{ width: 28, height: 28, background: 'var(--accent-s)', border: '1px solid var(--accent-g)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Layers size={14} color="var(--accent)" strokeWidth={1.8} />
+              ? <img src={siteSettings.site_logo_url} alt="Logo" style={{ height: 35, width: 35, borderRadius: 9, objectFit: 'cover', boxShadow: '0 0 8px var(--accent-s)' }} />
+              : <div style={{ width: 35, height: 35, background: 'var(--accent-s)', border: '1px solid var(--accent-g)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 8px var(--accent-s)' }}>
+                  <Layers size={18} color="var(--accent)" strokeWidth={1.8} />
                 </div>
             }
             <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
@@ -194,7 +194,7 @@ export default function Navbar() {
         {/* Footer */}
         <div style={{ padding: '0.875rem 1rem', borderTop: '1px solid var(--line)' }}>
           {user ? (
-            <button onClick={handleLogout} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.45rem', padding: '0.8rem', borderRadius: 12, background: 'rgba(239,68,68,0.07)', border: '1px solid rgba(239,68,68,0.15)', color: '#ef4444', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            <button onClick={handleLogout} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.65rem', padding: '0.8rem', borderRadius: 12, background: 'rgba(239,68,68,0.07)', border: '1px solid rgba(239,68,68,0.15)', color: '#ef4444', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
               <LogOut size={14} /> Log Out
             </button>
           ) : (

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Layers, X, Download, Bell } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { useLang } from '../context/LangContext';
 
 function CursorSpotlight() {
@@ -30,16 +31,25 @@ const SPLASH_KEY = 'pb_splash_v2';
 
 function SplashScreen({ onDone }: { onDone: () => void }) {
   const [exiting, setExiting] = useState(false);
+  const { siteSettings } = useAuth();
   useEffect(() => {
     const t = setTimeout(() => { setExiting(true); setTimeout(onDone, 500); }, 1400);
     return () => clearTimeout(t);
   }, [onDone]);
   return (
     <div className={`app-splash ${exiting ? 'splash-exit' : ''}`}>
-      <div className="app-splash__logo">
-        <Layers size={28} color="var(--accent)" strokeWidth={1.6} />
+      <div className="app-splash__logo" style={{ overflow: 'hidden' }}>
+        {siteSettings?.site_logo_url ? (
+          <img 
+            src={siteSettings.site_logo_url} 
+            alt="Logo" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+          />
+        ) : (
+          <Layers size={28} color="var(--accent)" strokeWidth={1.6} />
+        )}
       </div>
-      <div className="app-splash__title">Panel Bazaar BD</div>
+      <div className="app-splash__title">{siteSettings?.site_name || 'Panel Bazaar BD'}</div>
       <div className="app-splash__loader" />
     </div>
   );
