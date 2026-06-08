@@ -78,10 +78,10 @@ export default function StockRequest() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           <div style={{
             width: 44, height: 44, borderRadius: 14,
-            background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
+            background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <PlusCircle size={20} color="#10b981" />
+            <PlusCircle size={20} color="var(--accent)" />
           </div>
           <div>
             <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>Request Stock</h1>
@@ -96,7 +96,7 @@ export default function StockRequest() {
           {/* Form */}
           <div className="glass-card--static" style={{ padding: '1.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <Send size={15} color="#10b981" />
+              <Send size={15} color="var(--accent)" />
               <h3 style={{ margin: 0, fontSize: '0.875rem', fontWeight: 700, color: 'var(--text)' }}>New Request</h3>
             </div>
 
@@ -133,7 +133,7 @@ export default function StockRequest() {
                     outline: 'none', resize: 'vertical',
                     transition: 'border-color 0.18s',
                   }}
-                  onFocus={e => (e.target.style.borderColor = '#10b981')}
+                  onFocus={e => (e.target.style.borderColor = 'var(--accent)')}
                   onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
                 />
               </div>

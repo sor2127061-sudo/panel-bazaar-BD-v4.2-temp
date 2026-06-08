@@ -66,14 +66,14 @@ export default function Login() {
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{
             width: 56, height: 56,
-            background: 'rgba(16,185,129,0.1)',
-            border: '1px solid rgba(16,185,129,0.25)',
+            background: 'var(--accent-s)',
+            border: '1px solid var(--accent-g)',
             borderRadius: 16,
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 0 40px rgba(16,185,129,0.15)',
+            boxShadow: '0 0 40px var(--accent-s)',
             marginBottom: '1.25rem',
           }}>
-            <Layers size={24} color="#10b981" strokeWidth={1.6} />
+            <Layers size={24} color="var(--accent)" strokeWidth={1.6} />
           </div>
           <h1 style={{
             fontFamily: 'var(--font-serif)',
@@ -158,7 +158,7 @@ export default function Login() {
 
           <div style={{ textAlign: 'center' }}>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-mute)' }}>New to Panel Bazaar BD? </span>
-            <Link to="/register" style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: 600, textDecoration: 'none' }}>
+            <Link to="/register" style={{ fontSize: '0.8rem', color: 'var(--accent)', fontWeight: 600, textDecoration: 'none' }}>
               Create account <ArrowRight size={12} style={{ display: 'inline', verticalAlign: 'middle' }} />
             </Link>
           </div>

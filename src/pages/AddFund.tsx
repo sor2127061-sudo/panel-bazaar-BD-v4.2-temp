@@ -43,15 +43,15 @@ export default function AddFund() {
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-          <div style={{ width: 52, height: 52, borderRadius: 16, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 32px rgba(16,185,129,0.15)', marginBottom: '0.875rem' }}>
-            <Coins size={24} color="#10b981" strokeWidth={1.6} />
+          <div style={{ width: 52, height: 52, borderRadius: 16, background: 'var(--accent-s)', border: '1px solid var(--accent-g)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 32px var(--accent-s)', marginBottom: '0.875rem' }}>
+            <Coins size={24} color="var(--accent)" strokeWidth={1.6} />
           </div>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text)', margin: 0, letterSpacing: '-0.02em' }}>Add Funds</h1>
           <p style={{ color: 'var(--text-mute)', fontSize: '0.78rem', margin: '0.3rem 0 0' }}>bKash · Nagad · Rocket</p>
         </div>
 
         {/* Balance */}
-        <div style={{ background: 'linear-gradient(135deg,rgba(16,185,129,0.08) 0%,rgba(16,185,129,0.03) 100%)', border: '1px solid rgba(16,185,129,0.18)', borderRadius: 18, padding: '1.125rem', textAlign: 'center', marginBottom: '1rem' }}>
+        <div style={{ background: 'linear-gradient(135deg,var(--accent-s) 0%,var(--accent-s) 100%)', border: '1px solid var(--accent-s)', borderRadius: 18, padding: '1.125rem', textAlign: 'center', marginBottom: '1rem' }}>
           <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-mute)', marginBottom: '0.35rem', fontFamily: 'var(--font-mono)' }}>Current Balance</div>
           <div className="balance-glow">৳{(balance || 0).toLocaleString()}</div>
         </div>
@@ -72,7 +72,7 @@ export default function AddFund() {
             {/* Custom amount */}
             <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-mute)', marginBottom: '0.5rem', fontFamily: 'var(--font-mono)' }}>Custom Amount</div>
             <div style={{ position: 'relative', marginBottom: '1rem' }}>
-              <span style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', fontWeight: 700, color: '#10b981', fontFamily: 'var(--font-mono)', pointerEvents: 'none' }}>৳</span>
+              <span style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', fontWeight: 700, color: 'var(--accent)', fontFamily: 'var(--font-mono)', pointerEvents: 'none' }}>৳</span>
               <input
                 type="number" inputMode="numeric" min={10}
                 value={amount}

@@ -18,7 +18,7 @@ export default function Toast({ toasts, onDismiss }: ToastProps) {
 function ToastCard({ toast, onDismiss }: { toast: ToastMessage; onDismiss: (id: string) => void }) {
   useEffect(() => { const t = setTimeout(() => onDismiss(toast.id), 4000); return () => clearTimeout(t); }, [toast.id, onDismiss]);
   const cfg = {
-    success: { icon: <CheckCircle2 size={16} color="#10b981" />, border: 'rgba(16,185,129,0.25)', glow: 'rgba(16,185,129,0.15)' },
+    success: { icon: <CheckCircle2 size={16} color="var(--accent)" />, border: 'var(--accent-g)', glow: 'var(--accent-s)' },
     error:   { icon: <AlertCircle  size={16} color="#f87171" />, border: 'rgba(239,68,68,0.25)',  glow: 'rgba(239,68,68,0.12)' },
     info:    { icon: <Info         size={16} color="#818cf8" />, border: 'rgba(99,102,241,0.25)', glow: 'rgba(99,102,241,0.12)' },
   }[toast.type];

@@ -83,7 +83,7 @@ export default function Orders() {
     return (
       <div className="page-enter" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
-          <Loader2 size={32} color="#10b981" style={{ animation: 'spin 1s linear infinite', marginBottom: 12 }} />
+          <Loader2 size={32} color="var(--accent)" style={{ animation: 'spin 1s linear infinite', marginBottom: 12 }} />
           <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-mute)' }}>
             Loading orders…
@@ -101,10 +101,10 @@ export default function Orders() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           <div style={{
             width: 44, height: 44, borderRadius: 14,
-            background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
+            background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <ClipboardList size={20} color="#10b981" />
+            <ClipboardList size={20} color="var(--accent)" />
           </div>
           <div>
             <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text)' }}>
@@ -182,7 +182,7 @@ export default function Orders() {
                       }}>
                         {productName}
                       </div>
-                      <div style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 600, marginTop: 2 }}>
+                      <div style={{ fontSize: '0.7rem', color: 'var(--accent)', fontWeight: 600, marginTop: 2 }}>
                         {daysStr}
                       </div>
                     </div>

@@ -59,15 +59,15 @@ export default function ProductCard({ product, minPrice, hasStock }: ProductCard
             <span style={{
               display: 'inline-flex', alignItems: 'center', gap: 3,
               padding: '0.15rem 0.45rem',
-              background: 'rgba(16,185,129,0.15)', backdropFilter: 'blur(8px)',
-              border: '1px solid rgba(16,185,129,0.3)',
+              background: 'var(--accent-s)', backdropFilter: 'blur(8px)',
+              border: '1px solid var(--accent-g)',
               borderRadius: 999, fontSize: '0.55rem', fontWeight: 700,
-              color: '#10b981', fontFamily: 'var(--font-mono)',
+              color: 'var(--accent)', fontFamily: 'var(--font-mono)',
               letterSpacing: '0.08em', textTransform: 'uppercase',
             }}>
               <span style={{
                 width: 4, height: 4, borderRadius: 999,
-                background: '#10b981', boxShadow: '0 0 5px #10b981',
+                background: 'var(--accent)', boxShadow: '0 0 5px var(--accent)',
                 animation: 'pulse 2s ease-in-out infinite',
               }} />
               <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}`}</style>

@@ -151,7 +151,7 @@ export default function ProductDetail() {
         <div style={{ textAlign: 'center' }}>
           <AlertTriangle size={40} color="#f87171" style={{ marginBottom: 12 }} />
           <p style={{ color: '#f87171', fontWeight: 700, marginBottom: 12 }}>Product not found!</p>
-          <Link to="/" style={{ color: '#10b981', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.8rem' }}>
+          <Link to="/" style={{ color: 'var(--accent)', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.8rem' }}>
             <ArrowLeft size={14} /> Return to Market
           </Link>
         </div>
@@ -172,12 +172,12 @@ export default function ProductDetail() {
           <div className="glass-card--static" style={{ padding: '2.5rem', textAlign: 'center' }}>
             <div style={{
               width: 80, height: 80, borderRadius: 999,
-              background: 'rgba(16,185,129,0.12)', border: '2px solid rgba(16,185,129,0.35)',
+              background: 'var(--accent-s)', border: '2px solid var(--accent-g)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               margin: '0 auto 1.5rem',
-              boxShadow: '0 0 60px rgba(16,185,129,0.25)',
+              boxShadow: '0 0 60px var(--accent-g)',
             }}>
-              <PackageCheck size={38} color="#10b981" />
+              <PackageCheck size={38} color="var(--accent)" />
             </div>
             <h1 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text)', margin: '0 0 0.5rem' }}>
               Purchase Complete!
@@ -193,7 +193,7 @@ export default function ProductDetail() {
               <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-mute)', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem' }}>
                 Activation Code · {deliveredItem.item_type}
               </div>
-              <code style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 600, color: '#10b981', wordBreak: 'break-all', display: 'block', userSelect: 'all', whiteSpace: 'pre' }}>
+              <code style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--accent)', wordBreak: 'break-all', display: 'block', userSelect: 'all', whiteSpace: 'pre' }}>
                 {deliveryStr}
               </code>
             </div>
@@ -229,7 +229,7 @@ export default function ProductDetail() {
           fontSize: '0.75rem', fontWeight: 600, marginBottom: '1.5rem',
           transition: 'color 0.15s',
         }}>
-          <ArrowLeft size={14} color="#10b981" /> Return to Gallery
+          <ArrowLeft size={14} color="var(--accent)" /> Return to Gallery
         </Link>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 380px), 1fr))', gap: '1.5rem', alignItems: 'start' }}>
@@ -258,7 +258,7 @@ export default function ProductDetail() {
                     background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(12px)',
                     border: '1px solid rgba(255,255,255,0.15)', borderRadius: 999,
                     fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
-                    color: '#10b981', fontFamily: 'var(--font-mono)',
+                    color: 'var(--accent)', fontFamily: 'var(--font-mono)',
                   }}>
                     {product.category}
                   </span>
@@ -269,7 +269,7 @@ export default function ProductDetail() {
                 <h1 style={{ margin: '0 0 0.3rem', fontSize: '1.2rem', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.01em' }}>
                   {product.name}
                 </h1>
-                <p style={{ margin: 0, fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>
+                <p style={{ margin: 0, fontSize: '0.72rem', color: 'var(--accent)', fontWeight: 600 }}>
                   Authorized License Keys Store
                 </p>
 
@@ -324,7 +324,7 @@ export default function ProductDetail() {
                   display: 'flex', alignItems: 'center', gap: 6,
                   padding: '0.45rem 0.875rem',
                   background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
-                  borderRadius: 999, fontSize: '0.72rem', fontWeight: 600, color: '#10b981',
+                  borderRadius: 999, fontSize: '0.72rem', fontWeight: 600, color: 'var(--accent)',
                 }}>
                   {icon} {label}
                 </div>
@@ -344,7 +344,7 @@ export default function ProductDetail() {
                 borderRadius: 14,
               }}>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-mute)', fontWeight: 600 }}>Your Balance</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', fontWeight: 700, color: '#10b981' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent)' }}>
                   ৳{balance.toLocaleString()}
                 </div>
               </div>
@@ -382,7 +382,7 @@ export default function ProductDetail() {
                         }}
                       >
                         <div style={{ textAlign: 'left' }}>
-                          <div style={{ fontWeight: 700, fontSize: '0.9rem', color: isSelected ? '#10b981' : 'var(--text)' }}>
+                          <div style={{ fontWeight: 700, fontSize: '0.9rem', color: isSelected ? 'var(--accent)' : 'var(--text)' }}>
                             {pkg.days} Days
                           </div>
                           <div style={{ fontSize: '0.65rem', color: 'var(--text-mute)', marginTop: 2 }}>
@@ -391,7 +391,7 @@ export default function ProductDetail() {
                         </div>
                         <div style={{
                           fontFamily: 'var(--font-mono)', fontSize: '1rem', fontWeight: 700,
-                          color: isSelected ? '#10b981' : 'var(--text)',
+                          color: isSelected ? 'var(--accent)' : 'var(--text)',
                         }}>
                           ৳{Number(pkg.price).toLocaleString()}
                         </div>
@@ -459,7 +459,7 @@ export default function ProductDetail() {
                   <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#fbbf24' }}>
                     <AlertTriangle size={12} />
                     Insufficient balance.{' '}
-                    <Link to="/add-fund" style={{ color: '#10b981', fontWeight: 700, textDecoration: 'none' }}>Add Funds →</Link>
+                    <Link to="/add-fund" style={{ color: 'var(--accent)', fontWeight: 700, textDecoration: 'none' }}>Add Funds →</Link>
                   </div>
                 )}
               </div>

@@ -92,7 +92,7 @@ export default function MyKeys() {
     return (
       <div className="page-enter" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
-          <Loader2 size={32} color="#10b981" style={{ animation: 'spin 1s linear infinite', marginBottom: 12 }} />
+          <Loader2 size={32} color="var(--accent)" style={{ animation: 'spin 1s linear infinite', marginBottom: 12 }} />
           <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-mute)' }}>
             Loading keys…
@@ -111,10 +111,10 @@ export default function MyKeys() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{
               width: 44, height: 44, borderRadius: 14,
-              background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
+              background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <Key size={20} color="#10b981" />
+              <Key size={20} color="var(--accent)" />
             </div>
             <div>
               <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text)' }}>
@@ -183,10 +183,10 @@ export default function MyKeys() {
                         <span style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
                           padding: '0.2rem 0.6rem',
-                          background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
+                          background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
                           borderRadius: 999, fontSize: '0.6rem', fontWeight: 700,
                           fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', textTransform: 'uppercase',
-                          color: '#10b981',
+                          color: 'var(--accent)',
                         }}>
                           📍 {productName}
                         </span>
@@ -247,7 +247,7 @@ export default function MyKeys() {
                             }}>
                               <code style={{
                                 flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.8125rem',
-                                fontWeight: 600, color: '#10b981', wordBreak: 'break-all',
+                                fontWeight: 600, color: 'var(--accent)', wordBreak: 'break-all',
                                 userSelect: 'all',
                               }}>
                                 {deliveryVal}
@@ -257,10 +257,10 @@ export default function MyKeys() {
                                 style={{
                                   display: 'inline-flex', alignItems: 'center', gap: 5,
                                   padding: '0.45rem 0.85rem',
-                                  background: isCopied ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.05)',
-                                  border: `1px solid ${isCopied ? 'rgba(16,185,129,0.3)' : 'rgba(255,255,255,0.1)'}`,
+                                  background: isCopied ? 'var(--accent-s)' : 'rgba(255,255,255,0.05)',
+                                  border: `1px solid ${isCopied ? 'var(--accent-g)' : 'rgba(255,255,255,0.1)'}`,
                                   borderRadius: 10, cursor: 'pointer',
-                                  color: isCopied ? '#10b981' : 'var(--text-mute)',
+                                  color: isCopied ? 'var(--accent)' : 'var(--text-mute)',
                                   fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.04em',
                                   transition: 'all 0.2s', flexShrink: 0,
                                 }}

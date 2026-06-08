@@ -253,7 +253,7 @@ body {
 
 /* Badge */
 .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.18rem 0.55rem; border-radius: 999px; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; font-family: var(--font-mono); }
-.badge-green  { background: rgba(16,185,129,0.10); border: 1px solid rgba(16,185,129,0.22); color: #10b981; }
+.badge-green  { background: var(--accent-s); border: 1px solid var(--accent-g); color: var(--accent); }
 .badge-red    { background: rgba(239,68,68,0.10);  border: 1px solid rgba(239,68,68,0.22);  color: #ef4444; }
 .badge-yellow { background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.22); color: #f59e0b; }
 .badge-blue   { background: rgba(99,102,241,0.10); border: 1px solid rgba(99,102,241,0.22); color: #6366f1; }
@@ -290,7 +290,7 @@ body {
 .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1.5rem; text-align: center; gap: 0.875rem; }
 
 /* Gradient Text */
-.gradient-text-accent { background: linear-gradient(135deg, var(--accent) 0%, #34d399 60%, #6ee7b7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.gradient-text-accent { background: linear-gradient(135deg, var(--accent) 0%, var(--accent) 60%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
 /* Theme-aware transitions (only after theme is set) */
 .glass-card, .glass-card--static, .product-card, .stat-card, .modal-box,

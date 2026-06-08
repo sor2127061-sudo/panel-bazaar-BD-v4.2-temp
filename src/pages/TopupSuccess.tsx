@@ -102,11 +102,11 @@ export default function TopupSuccess() {
           <div className="glass-card--static" style={{ padding: '3rem', textAlign: 'center' }}>
             <div style={{
               width: 72, height: 72, borderRadius: 999,
-              background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)',
+              background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               margin: '0 auto 1.5rem',
             }}>
-              <Loader2 size={32} color="#10b981" style={{ animation: 'spin 1s linear infinite' }} />
+              <Loader2 size={32} color="var(--accent)" style={{ animation: 'spin 1s linear infinite' }} />
               <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
             </div>
             <h1 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text)', margin: '0 0 0.5rem' }}>
@@ -123,12 +123,12 @@ export default function TopupSuccess() {
             {/* Success icon with glow */}
             <div style={{
               width: 80, height: 80, borderRadius: 999,
-              background: 'rgba(16,185,129,0.12)', border: '2px solid rgba(16,185,129,0.35)',
+              background: 'var(--accent-s)', border: '2px solid var(--accent-g)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               margin: '0 auto 1.5rem',
-              boxShadow: '0 0 60px rgba(16,185,129,0.25)',
+              boxShadow: '0 0 60px var(--accent-g)',
             }}>
-              <CheckCircle size={38} color="#10b981" />
+              <CheckCircle size={38} color="var(--accent)" />
             </div>
             <h1 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.75rem', fontWeight: 700, color: 'var(--text)', margin: '0 0 0.5rem' }}>
               Payment Confirmed!
@@ -139,7 +139,7 @@ export default function TopupSuccess() {
 
             {/* Balance display */}
             <div style={{
-              background: 'rgba(16,185,129,0.07)', border: '1px solid rgba(16,185,129,0.2)',
+              background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
               borderRadius: 16, padding: '1.25rem', marginBottom: '1.5rem',
             }}>
               <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-mute)', fontFamily: 'var(--font-mono)', marginBottom: '0.5rem' }}>
@@ -147,7 +147,7 @@ export default function TopupSuccess() {
               </div>
               <div className="balance-glow">৳{(displayBalance || 0).toLocaleString()}</div>
               {displayAmount && (
-                <div style={{ fontSize: '0.75rem', color: '#10b981', marginTop: 6, fontFamily: 'var(--font-mono)' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--accent)', marginTop: 6, fontFamily: 'var(--font-mono)' }}>
                   +৳{displayAmount} added
                 </div>
               )}

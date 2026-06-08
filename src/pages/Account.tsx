@@ -122,7 +122,7 @@ export default function Account() {
   if (!user) {
     return (
       <div className="page-enter" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Loader2 size={32} color="#10b981" style={{ animation: 'spin 1s linear infinite' }} />
+        <Loader2 size={32} color="var(--accent)" style={{ animation: 'spin 1s linear infinite' }} />
         <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
       </div>
     );
@@ -153,11 +153,11 @@ export default function Account() {
             {/* Avatar */}
             <div style={{
               width: 56, height: 56, borderRadius: 999,
-              background: 'rgba(16,185,129,0.12)',
-              border: '2px solid rgba(16,185,129,0.3)',
+              background: 'var(--accent-s)',
+              border: '2px solid var(--accent-g)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: '#10b981',
-              boxShadow: '0 0 24px rgba(16,185,129,0.15)',
+              fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent)',
+              boxShadow: '0 0 24px var(--accent-s)',
             }}>
               {user.display_name ? user.display_name.charAt(0).toUpperCase() : (user.email?.charAt(0).toUpperCase() || 'U')}
             </div>
@@ -169,9 +169,9 @@ export default function Account() {
               <span style={{
                 display: 'inline-block', marginTop: '0.4rem',
                 padding: '0.15rem 0.6rem',
-                background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
+                background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
                 borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em',
-                textTransform: 'uppercase', color: '#10b981', fontFamily: 'var(--font-mono)',
+                textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)',
               }}>
                 {getMemberSince()}
               </span>
@@ -192,8 +192,8 @@ export default function Account() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
           {/* Balance card */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0.03) 100%)',
-            border: '1px solid rgba(16,185,129,0.2)',
+            background: 'linear-gradient(135deg, var(--accent-s) 0%, var(--accent-s) 100%)',
+            border: '1px solid var(--accent-g)',
             borderRadius: 20, padding: '1.25rem',
             gridColumn: 'span 2',
           }}>
@@ -227,7 +227,7 @@ export default function Account() {
             background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)',
             borderRadius: 18, padding: '1.25rem',
           }}>
-            <ShoppingBag size={18} color="#10b981" style={{ marginBottom: 8 }} />
+            <ShoppingBag size={18} color="var(--accent)" style={{ marginBottom: 8 }} />
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text)' }}>
               {statsLoading ? '—' : totalOrders}
             </div>
@@ -256,10 +256,10 @@ export default function Account() {
             <button onClick={handleCopyReferral} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '0.5rem 0.75rem',
-              background: copiedLink ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.04)',
-              border: `1px solid ${copiedLink ? 'rgba(16,185,129,0.3)' : 'rgba(255,255,255,0.08)'}`,
+              background: copiedLink ? 'var(--accent-s)' : 'rgba(255,255,255,0.04)',
+              border: `1px solid ${copiedLink ? 'var(--accent-g)' : 'rgba(255,255,255,0.08)'}`,
               borderRadius: 10, cursor: 'pointer',
-              color: copiedLink ? '#10b981' : 'var(--text-mute)',
+              color: copiedLink ? 'var(--accent)' : 'var(--text-mute)',
               fontSize: '0.7rem', fontWeight: 700,
             }}>
               {copiedLink ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy Link</>}
@@ -364,7 +364,7 @@ export default function Account() {
                     <div style={{ textAlign: 'right', flexShrink: 0 }}>
                       <div style={{
                         fontFamily: 'var(--font-mono)', fontSize: '0.95rem', fontWeight: 700,
-                        color: isDebit ? '#f87171' : '#10b981',
+                        color: isDebit ? '#f87171' : 'var(--accent)',
                       }}>
                         {isDebit ? '' : '+'}{Number(txn.amount).toLocaleString()} ৳
                       </div>

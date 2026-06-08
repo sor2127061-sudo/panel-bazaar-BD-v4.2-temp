@@ -126,7 +126,7 @@ export default function Bundles() {
     return (
       <div className="page-enter" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
-          <Loader2 size={32} color="#10b981" style={{ animation: 'spin 1s linear infinite', marginBottom: 12 }} />
+          <Loader2 size={32} color="var(--accent)" style={{ animation: 'spin 1s linear infinite', marginBottom: 12 }} />
           <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-mute)' }}>
             Loading Bundles…
@@ -144,10 +144,10 @@ export default function Bundles() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           <div style={{
             width: 44, height: 44, borderRadius: 14,
-            background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
+            background: 'var(--accent-s)', border: '1px solid var(--accent-g)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <Package size={20} color="#10b981" />
+            <Package size={20} color="var(--accent)" />
           </div>
           <div>
             <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>
@@ -162,17 +162,17 @@ export default function Bundles() {
         {/* Purchase success */}
         {purchaseSuccess && deliveredItems.length > 0 && (
           <div style={{
-            background: 'rgba(16,185,129,0.06)',
-            border: '2px solid rgba(16,185,129,0.3)',
+            background: 'var(--accent-s)',
+            border: '2px solid var(--accent-g)',
             borderRadius: 22, padding: '1.75rem', marginBottom: '2rem',
-            boxShadow: '0 0 60px -10px rgba(16,185,129,0.15)',
+            boxShadow: '0 0 60px -10px var(--accent-s)',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem', marginBottom: '1.25rem' }}>
-              <div style={{ width: 40, height: 40, borderRadius: 12, background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <ShieldCheck size={20} color="#000" />
               </div>
               <div>
-                <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1rem', color: '#10b981' }}>Bundle Acquired! 🎉</h3>
+                <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1rem', color: 'var(--accent)' }}>Bundle Acquired! 🎉</h3>
                 <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-mute)' }}>Your genuine license keys are ready below.</p>
               </div>
             </div>
@@ -193,15 +193,15 @@ export default function Bundles() {
                       {item.product_name} · {item.item_type}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <code style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 600, color: '#10b981', wordBreak: 'break-all', userSelect: 'all' }}>
+                      <code style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 600, color: 'var(--accent)', wordBreak: 'break-all', userSelect: 'all' }}>
                         {displayVal}
                       </code>
                       <button onClick={() => handleCopyCode(item.id, displayVal)} style={{
                         display: 'inline-flex', alignItems: 'center', gap: 5, padding: '0.4rem 0.75rem',
-                        background: isCopied ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.05)',
-                        border: `1px solid ${isCopied ? 'rgba(16,185,129,0.3)' : 'rgba(255,255,255,0.1)'}`,
+                        background: isCopied ? 'var(--accent-s)' : 'rgba(255,255,255,0.05)',
+                        border: `1px solid ${isCopied ? 'var(--accent-g)' : 'rgba(255,255,255,0.1)'}`,
                         borderRadius: 8, cursor: 'pointer',
-                        color: isCopied ? '#10b981' : 'var(--text-mute)',
+                        color: isCopied ? 'var(--accent)' : 'var(--text-mute)',
                         fontSize: '0.65rem', fontWeight: 700, flexShrink: 0,
                       }}>
                         {isCopied ? <><Check size={11} /> Done</> : <><Copy size={11} /> Copy</>}
@@ -251,7 +251,7 @@ export default function Bundles() {
                   overflow: 'hidden', transition: 'border-color 0.2s, box-shadow 0.2s',
                 }}>
                   {/* Top accent */}
-                  <div style={{ height: 3, background: 'linear-gradient(90deg, #10b981, #34d399)' }} />
+                  <div style={{ height: 3, background: 'linear-gradient(90deg, var(--accent), var(--accent))' }} />
 
                   <div style={{ padding: '1.5rem' }}>
                     {/* Bundle header */}
@@ -268,7 +268,7 @@ export default function Bundles() {
                       </div>
                       <div style={{
                         fontFamily: 'var(--font-mono)', fontSize: '1.25rem', fontWeight: 700,
-                        color: '#10b981', textShadow: '0 0 20px rgba(16,185,129,0.3)',
+                        color: 'var(--accent)', textShadow: '0 0 20px var(--accent-g)',
                         flexShrink: 0, marginLeft: '1rem',
                       }}>
                         ৳{Number(bundle.price).toLocaleString()}
@@ -285,8 +285,8 @@ export default function Bundles() {
                             <div key={comp.id} style={{
                               display: 'flex', alignItems: 'center', gap: '0.6rem',
                               padding: '0.5rem 0.75rem',
-                              background: 'rgba(16,185,129,0.04)',
-                              border: '1px solid rgba(16,185,129,0.1)',
+                              background: 'var(--accent-s)',
+                              border: '1px solid var(--accent-s)',
                               borderRadius: 10,
                             }}>
                               {product?.image_url && (
@@ -296,7 +296,7 @@ export default function Bundles() {
                                 {product?.name || 'Product'}
                               </span>
                               {pkg?.days && (
-                                <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: '#10b981', fontWeight: 600 }}>
+                                <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--accent)', fontWeight: 600 }}>
                                   {pkg.days}d
                                 </span>
                               )}
@@ -330,7 +330,7 @@ export default function Bundles() {
                     {user && balance < Number(bundle.price) && (
                       <p style={{ margin: '0.75rem 0 0', fontSize: '0.72rem', color: '#fbbf24', display: 'flex', alignItems: 'center', gap: 5 }}>
                         <AlertCircle size={12} /> Insufficient balance.{' '}
-                        <Link to="/add-fund" style={{ color: '#10b981', fontWeight: 700, textDecoration: 'none' }}>Add Funds →</Link>
+                        <Link to="/add-fund" style={{ color: 'var(--accent)', fontWeight: 700, textDecoration: 'none' }}>Add Funds →</Link>
                       </p>
                     )}
                   </div>
