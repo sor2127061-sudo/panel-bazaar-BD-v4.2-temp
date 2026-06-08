@@ -4,12 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../lib/supabase';
-import { Menu, X, Home, CreditCard, ShoppingBag, Key, User as UserIcon, LogOut, Package, RefreshCw, Send, Layers, Sun, Moon } from 'lucide-react';
+import { Menu, X, Home, CreditCard, ShoppingBag, Key, User as UserIcon, LogOut, Package, RefreshCw, Send, Layers, Sun, Moon, Languages } from 'lucide-react';
+import { useLang } from '../context/LangContext';
 
 export default function Navbar() {
   const { user, dbUser, balance, refreshBalance, siteSettings } = useAuth();
   const { showSuccess, showError } = useToast();
   const { theme, toggleTheme } = useTheme();
+  const { lang, t, toggle: toggleLang } = useLang();
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -52,14 +54,14 @@ export default function Navbar() {
 
   // Admin link removed — accessible via /admin URL only
   const drawerLinks = [
-    { label: 'Home',           path: '/',               icon: <Home size={18} /> },
-    { label: 'Custom Bundles', path: '/bundles',        icon: <Package size={18} /> },
+    { label: t.home,          path: '/',               icon: <Home size={18} /> },
+    { label: t.bundles,       path: '/bundles',        icon: <Package size={18} /> },
     ...(user ? [
-      { label: 'Add Funds',    path: '/add-fund',       icon: <CreditCard size={18} /> },
-      { label: 'My Orders',    path: '/orders',         icon: <ShoppingBag size={18} /> },
-      { label: 'My Keys',      path: '/codes',          icon: <Key size={18} /> },
-      { label: 'Stock Request',path: '/stock-request',  icon: <Send size={18} /> },
-      { label: 'Account',      path: '/account',        icon: <UserIcon size={18} /> },
+      { label: t.funds,         path: '/add-fund',       icon: <CreditCard size={18} /> },
+      { label: t.orders,        path: '/orders',         icon: <ShoppingBag size={18} /> },
+      { label: t.keys,          path: '/codes',          icon: <Key size={18} /> },
+      { label: t.stock_request, path: '/stock-request',  icon: <Send size={18} /> },
+      { label: t.account,       path: '/account',        icon: <UserIcon size={18} /> },
     ] : []),
   ];
 
@@ -84,10 +86,18 @@ export default function Navbar() {
 
           {/* Right */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            {/* Language toggle */}
+            <button
+              onClick={toggleLang}
+              title={lang === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
+              style={{ width: 34, height: 34, background: 'var(--glass)', border: '1px solid var(--line-2)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-dim)', flexShrink: 0, transition: 'background 0.2s, color 0.2s', fontSize: '0.65rem', fontWeight: 700, fontFamily: 'var(--font-sans)' }}
+            >
+              {lang === 'bn' ? 'EN' : 'বাং'}
+            </button>
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'লাইট মোড' : 'ডার্ক মোড'}
               style={{ width: 34, height: 34, background: 'var(--glass)', border: '1px solid var(--line-2)', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-dim)', flexShrink: 0, transition: 'background 0.2s, color 0.2s' }}
             >
               {isDark ? <Sun size={15} /> : <Moon size={15} />}
@@ -111,8 +121,8 @@ export default function Navbar() {
               </>
             ) : (
               <div style={{ display: 'flex', gap: '0.35rem' }}>
-                <Link to="/login" className="btn-ghost" style={{ padding: '0.38rem 0.85rem', fontSize: '0.72rem', textDecoration: 'none' }}>Login</Link>
-                <Link to="/register" className="btn-accent" style={{ padding: '0.38rem 0.85rem', fontSize: '0.72rem', textDecoration: 'none' }}>Register</Link>
+                <Link to="/login" className="btn-ghost" style={{ padding: '0.38rem 0.85rem', fontSize: '0.72rem', textDecoration: 'none' }}>{t.login}</Link>
+                <Link to="/register" className="btn-accent" style={{ padding: '0.38rem 0.85rem', fontSize: '0.72rem', textDecoration: 'none' }}>{t.register}</Link>
               </div>
             )}
           </div>
@@ -126,7 +136,7 @@ export default function Navbar() {
 
       {/* Drawer */}
       <div style={{
-        position: 'fixed', top: 0, right: 0, bottom: 0,
+        position: 'fixed', top: 56, right: 0, bottom: 0,
         width: 'min(290px, 84vw)', zIndex: 96,
         background: 'var(--bg-1)',
         backdropFilter: 'blur(28px) saturate(180%)',

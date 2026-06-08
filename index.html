@@ -1,31 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="bn">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23000000'/><path d='M30 35 L50 25 L70 35 L70 65 L50 75 L30 65 Z' fill='none' stroke='%2310b981' stroke-width='4'/><circle cx='50' cy='50' r='8' fill='%2310b981'/></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Panel Bazaar BD — Premium digital panels, streaming keys and instant delivery store." />
-    <title>Panel Bazaar BD — LUMEN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Panel Bazaar BD — প্রিমিয়াম স্ট্রিমিং প্যানেল ও ডিজিটাল কী। তাৎক্ষণিক ডেলিভারি।" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PanelBD" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Panel Bazaar BD</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- ⚡ No-flash theme init: runs synchronously before any CSS or React -->
+    <!-- ⚡ No-flash theme init -->
     <script>
       (function() {
         var t;
         try { t = localStorage.getItem('pb_theme'); } catch(e) {}
         var theme = (t === 'light' || t === 'dark') ? t : 'dark';
         document.documentElement.setAttribute('data-theme', theme);
-        // Set theme-color meta
         var mc = document.querySelector('meta[name="theme-color"]');
         if (mc) mc.setAttribute('content', theme === 'dark' ? '#000000' : '#F5F6FA');
       })();
     </script>
     <style>
-      /* Critical: paint correct background before CSS loads to prevent white flash */
       html { background: #000000; }
       html[data-theme="light"] { background: #F5F6FA; }
-      html, body { margin: 0; padding: 0; color: #F2F2F4; font-family: system-ui, -apple-system, sans-serif; }
-      html[data-theme="light"] body { color: #0A0B0E; }
+      html, body { margin: 0; padding: 0; }
       #root { min-height: 100vh; }
     </style>
   </head>

@@ -27,6 +27,19 @@ const DEFAULT_SETTINGS: SiteSettings = {
   primary_color: '#10b981',
 };
 
+/** Apply primary_color to CSS custom property --accent and derived vars */
+function applyAccentColor(hex: string) {
+  if (!hex || !/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+  const root = document.documentElement;
+  root.style.setProperty('--accent', hex);
+  // Derive rgba variants
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  root.style.setProperty('--accent-s', `rgba(${r},${g},${b},0.12)`);
+  root.style.setProperty('--accent-g', `rgba(${r},${g},${b},0.45)`);
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<(User & Partial<DbUser>) | null>(null);
@@ -37,16 +50,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchSiteSettings = useCallback(async () => {
     try {
+      // Try key-value format first
       const { data, error } = await supabase.from('site_settings').select('key, value');
-      if (error) throw error;
-      if (data && data.length > 0) {
+      if (!error && data && data.length > 0 && data[0].key) {
         const settings: Partial<SiteSettings> = {};
-        data.forEach((row) => {
+        data.forEach((row: any) => {
           if (row.key === 'site_name') settings.site_name = row.value;
           if (row.key === 'site_logo_url') settings.site_logo_url = row.value;
           if (row.key === 'primary_color') settings.primary_color = row.value;
         });
-        setSiteSettings({ site_name: settings.site_name || DEFAULT_SETTINGS.site_name, site_logo_url: settings.site_logo_url || DEFAULT_SETTINGS.site_logo_url, primary_color: settings.primary_color || DEFAULT_SETTINGS.primary_color });
+        const merged = {
+          site_name: settings.site_name || DEFAULT_SETTINGS.site_name,
+          site_logo_url: settings.site_logo_url || DEFAULT_SETTINGS.site_logo_url,
+          primary_color: settings.primary_color || DEFAULT_SETTINGS.primary_color,
+        };
+        setSiteSettings(merged);
+        applyAccentColor(merged.primary_color);
+        return;
+      }
+      // Try row format (id=1)
+      const { data: row } = await supabase.from('site_settings').select('*').eq('id', 1).single();
+      if (row) {
+        const merged = {
+          site_name: row.site_name || DEFAULT_SETTINGS.site_name,
+          site_logo_url: row.site_logo_url || DEFAULT_SETTINGS.site_logo_url,
+          primary_color: row.primary_color || DEFAULT_SETTINGS.primary_color,
+        };
+        setSiteSettings(merged);
+        applyAccentColor(merged.primary_color);
       }
     } catch (e) { console.warn('Failed to load site settings:', e); }
   }, []);

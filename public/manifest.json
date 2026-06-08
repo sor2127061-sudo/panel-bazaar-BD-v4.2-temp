@@ -1,0 +1,21 @@
+{
+  "name": "Panel Bazaar BD",
+  "short_name": "PanelBD",
+  "description": "প্রিমিয়াম ডিজিটাল প্যানেল ও লাইসেন্স কী স্টোর",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='90' fill='%23000'/><path d='M160 180 L256 130 L352 180 L352 332 L256 382 L160 332 Z' fill='none' stroke='%2310b981' stroke-width='20'/><circle cx='256' cy='256' r='42' fill='%2310b981'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "finance"],
+  "lang": "bn",
+  "dir": "ltr"
+}

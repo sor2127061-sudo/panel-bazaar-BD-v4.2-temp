@@ -12,14 +12,14 @@ import { Settings, Package as Pkg, Database, ShoppingBag, HelpCircle, Sparkles, 
 type Tab = 'overview' | 'products' | 'categories' | 'packages' | 'stock' | 'orders' | 'requests' | 'branding';
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: 'overview',    label: 'Overview',    icon: <BarChart3 size={15} /> },
-  { key: 'products',    label: 'Products',    icon: <Layers size={15} /> },
-  { key: 'categories',  label: 'Categories',  icon: <Tag size={15} /> },
-  { key: 'packages',    label: 'Packages',    icon: <Pkg size={15} /> },
-  { key: 'stock',       label: 'Stock',       icon: <Database size={15} /> },
-  { key: 'orders',      label: 'Orders',      icon: <ShoppingBag size={15} /> },
-  { key: 'requests',    label: 'Requests',    icon: <HelpCircle size={15} /> },
-  { key: 'branding',    label: 'Branding',    icon: <Sparkles size={15} /> },
+  { key: 'overview',    label: 'ওভারভিউ',    icon: <BarChart3 size={15} /> },
+  { key: 'products',    label: 'প্রোডাক্ট',  icon: <Layers size={15} /> },
+  { key: 'categories',  label: 'ক্যাটাগরি',  icon: <Tag size={15} /> },
+  { key: 'packages',    label: 'প্যাকেজ',    icon: <Pkg size={15} /> },
+  { key: 'stock',       label: 'স্টক',       icon: <Database size={15} /> },
+  { key: 'orders',      label: 'অর্ডার',     icon: <ShoppingBag size={15} /> },
+  { key: 'requests',    label: 'রিকোয়েস্ট', icon: <HelpCircle size={15} /> },
+  { key: 'branding',    label: 'ব্র্যান্ড',   icon: <Sparkles size={15} /> },
 ];
 
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
   }, [dbUser, reload]);
 
   const stats = useMemo(() => ({
-    revenue: orders.filter(o=>o.status==='completed').reduce((s:number,o:any)=>s+Number(o.amount_paid),0),
+    revenue: orders.filter(o=>o.status==='completed').reduce((s:number,o:any)=>s+(isNaN(Number(o.amount_paid))?0:Number(o.amount_paid)),0),
     products: products.filter(p=>p.is_active).length,
     available: stockItems.filter(s=>!s.is_sold).length,
     sold: stockItems.filter(s=>s.is_sold).length,
@@ -233,15 +233,25 @@ export default function AdminDashboard() {
 
   const saveBrand = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!brandName.trim()) { showError('Name required'); return; }
+    if (!brandName.trim()) { showError('সাইটের নাম দিন'); return; }
     try {
+      // Try row format
       const {error} = await supabase.from('site_settings').upsert({id:1,site_name:brandName,site_logo_url:brandLogo,primary_color:brandColor});
       if (error) {
+        // Fallback: key-value format
         await supabase.from('site_settings').upsert([
           {key:'site_name',value:brandName},{key:'site_logo_url',value:brandLogo},{key:'primary_color',value:brandColor}
         ],{onConflict:'key'});
       }
-      showSuccess('Branding saved!'); await fetchSiteSettings();
+      // Apply color immediately to CSS
+      const r = document.documentElement;
+      r.style.setProperty('--accent', brandColor);
+      const hex = brandColor.replace('#','');
+      const rv = parseInt(hex.slice(0,2),16), gv = parseInt(hex.slice(2,4),16), bv = parseInt(hex.slice(4,6),16);
+      r.style.setProperty('--accent-s', `rgba(${rv},${gv},${bv},0.12)`);
+      r.style.setProperty('--accent-g', `rgba(${rv},${gv},${bv},0.45)`);
+      showSuccess('ব্র্যান্ডিং সেভ হয়েছে! রঙ প্রয়োগ হয়েছে।');
+      await fetchSiteSettings();
     } catch(e:any){ showError(e.message); }
   };
 
@@ -260,13 +270,23 @@ export default function AdminDashboard() {
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '1rem' }}>
 
         {/* Header */}
-        <div style={{ display:'flex', alignItems:'center', gap:'0.75rem', marginBottom:'1rem' }}>
-          <div style={{ width:40, height:40, borderRadius:12, background:'var(--accent-s)', border:'1px solid var(--accent-g)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-            <Settings size={18} color="var(--accent)" />
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1rem' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:'0.75rem' }}>
+            <div style={{ width:40, height:40, borderRadius:12, background:'var(--accent-s)', border:'1px solid var(--accent-g)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+              <Settings size={18} color="var(--accent)" />
+            </div>
+            <div>
+              <h1 style={{ margin:0, fontSize:'1.1rem', fontWeight:800, color:'var(--text)' }}>অ্যাডমিন প্যানেল</h1>
+              <p style={{ margin:0, fontSize:'0.7rem', color:'var(--text-mute)' }}>Panel Bazaar BD</p>
+            </div>
           </div>
-          <div>
-            <h1 style={{ margin:0, fontSize:'1.1rem', fontWeight:800, color:'var(--text)' }}>Admin Panel</h1>
-            <p style={{ margin:0, fontSize:'0.7rem', color:'var(--text-mute)' }}>Panel Bazaar BD</p>
+          <div style={{ display:'flex', gap:'0.4rem' }}>
+            <button
+              onClick={() => window.scrollTo({top:0,behavior:'smooth'})}
+              style={{ padding:'0.45rem 0.7rem', background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:9, fontSize:'0.68rem', color:'var(--text-dim)', cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}
+            >
+              <RefreshCw size={12} /> রিফ্রেশ
+            </button>
           </div>
         </div>
 

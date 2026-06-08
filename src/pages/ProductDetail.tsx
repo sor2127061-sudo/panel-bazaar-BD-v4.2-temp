@@ -9,12 +9,21 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { Product, Package, StockItem } from '../types';
-import { ArrowLeft, ShieldCheck, Wallet, Zap, Coins, Copy, Check, Ticket, AlertTriangle, PackageCheck } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Wallet, Zap, Coins, Copy, Check, Ticket, AlertTriangle, PackageCheck, PlayCircle } from 'lucide-react';
+import { useLang } from '../context/LangContext';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const { user, balance, refreshBalance } = useAuth();
   const { showSuccess, showError, showInfo } = useToast();
+  const { t } = useLang();
+
+  // Extract YouTube/setup video URL from description
+  const extractVideoId = (desc: string): string | null => {
+    if (!desc) return null;
+    const m = desc.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
+    return m ? m[1] : null;
+  };
   const navigate = useNavigate();
 
   const [product, setProduct] = useState<Product | null>(null);
@@ -174,7 +183,7 @@ export default function ProductDetail() {
               Purchase Complete!
             </h1>
             <p style={{ color: 'var(--text-mute)', fontSize: '0.825rem', marginBottom: '1.5rem' }}>
-              Your license key has been delivered. Copy it now!
+              {t.key_delivered}
             </p>
 
             <div style={{
@@ -267,15 +276,36 @@ export default function ProductDetail() {
                 {product.description && (
                   <div style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--line)' }}>
                     <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-mute)', marginBottom: '0.75rem', fontFamily: 'var(--font-mono)' }}>
-                      Description & Instructions
+                      {t.description}
                     </div>
                     <div style={{
-                      fontSize: '0.8rem', color: 'var(--text-mute)', lineHeight: 1.65,
+                      fontSize: '0.8rem', color: 'var(--text-dim)', lineHeight: 1.7,
                       background: 'var(--desc-bg)', border: '1px solid var(--desc-border)',
                       borderRadius: 12, padding: '1rem', whiteSpace: 'pre-line',
                     }}>
-                      {product.description}
+                      {product.description.replace(/https?:\/\/\S+/g, '').trim()}
                     </div>
+                    {/* Setup video embed — extracted from description URL */}
+                    {(() => {
+                      const vid = extractVideoId(product.description);
+                      if (!vid) return null;
+                      return (
+                        <div style={{ marginTop: '1rem' }}>
+                          <div style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.5rem', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 5 }}>
+                            <PlayCircle size={11} /> {t.setup_video}
+                          </div>
+                          <div style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--line)', aspectRatio: '16/9', background: '#000' }}>
+                            <iframe
+                              src={`https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1`}
+                              title={t.setup_video}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 )}
               </div>
@@ -286,9 +316,9 @@ export default function ProductDetail() {
               display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
             }}>
               {[
-                { icon: <ShieldCheck size={13} />, label: 'Genuine Keys' },
-                { icon: <Zap size={13} />, label: 'Instant Delivery' },
-                { icon: <Wallet size={13} />, label: 'Wallet Payment' },
+                { icon: <ShieldCheck size={13} />, label: t.genuine },
+                { icon: <Zap size={13} />, label: t.instant_delivery },
+                { icon: <Wallet size={13} />, label: t.wallet_payment },
               ].map(({ icon, label }) => (
                 <div key={label} style={{
                   display: 'flex', alignItems: 'center', gap: 6,
