@@ -28,7 +28,9 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
       <div className="modal-box">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.125rem', borderBottom: '1px solid var(--line)' }}>
           <span style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text)' }}>{title}</span>
-          <button onClick={onClose} style={{ width: 28, height: 28, background: 'var(--glass)', border: '1px solid var(--line-2)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-mute)' }}><X size={14} /></button>
+          <button onClick={onClose} style={{ width: 28, height: 28, background: 'var(--glass)', border: '1px solid var(--line-2)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <X size={16} />
+          </button>
         </div>
         <div style={{ padding: '1.125rem' }}>{children}</div>
       </div>
@@ -36,7 +38,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   );
 }
 
-const inp: React.CSSProperties = { width: '100%', padding: '0.75rem 0.875rem', background: 'var(--input-bg)', border: '1px solid var(--line-2)', borderRadius: 11, color: 'var(--text)', fontFamily: 'var(--font-sans)', fontSize: 16, outline: 'none' };
+const inp: React.CSSProperties = { width: '100%', padding: '0.75rem 0.875rem', background: 'var(--input-bg)', border: '1px solid var(--line-2)', borderRadius: 11, color: 'var(--text)', fontFamily: 'inherit' };
 const ta: React.CSSProperties = { ...inp, resize: 'vertical', minHeight: 160, lineHeight: 1.6, fontSize: 14 };
 const sel: React.CSSProperties = { ...inp };
 
@@ -283,7 +285,7 @@ export default function AdminDashboard() {
           <div style={{ display:'flex', gap:'0.4rem' }}>
             <button
               onClick={() => window.scrollTo({top:0,behavior:'smooth'})}
-              style={{ padding:'0.45rem 0.7rem', background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:9, fontSize:'0.68rem', color:'var(--text-dim)', cursor:'pointer', display:'flex', alignItems:'center', gap:4 }}
+              style={{ padding:'0.45rem 0.7rem', background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:9, fontSize:'0.68rem', color:'var(--text-dim)', cursor:'pointer', display:'flex', alignItems:'center', gap:'0.3rem' }}
             >
               <RefreshCw size={12} /> রিফ্রেশ
             </button>
@@ -359,13 +361,13 @@ export default function AdminDashboard() {
                     <span className="badge badge-dim" style={{ marginTop:2 }}>{p.category}</span>
                   </div>
                   <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
-                    <button onClick={() => toggleProd(p.id, p.is_active)} className={`badge ${p.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0.5rem' }}>
+                    <button onClick={() => toggleProd(p.id, p.is_active)} className={`badge ${p.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0.5rem', fontSize:'0.65rem' }}>
                       {p.is_active?'On':'Off'}
                     </button>
-                    <button onClick={() => { setEditProd(p); setPName(p.name); setPDesc(p.description||''); setPCat(p.category); setPImg(p.image_url||''); setPActive(p.is_active); setPSort(p.sort_order); setShowProd(true); }} style={{ width:30, height:30, background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'var(--text-mute)' }}>
+                    <button onClick={() => { setEditProd(p); setPName(p.name); setPDesc(p.description||''); setPCat(p.category); setPImg(p.image_url||''); setPActive(p.is_active); setPSort(p.sort_order); setShowProd(true); }} style={{ width:30, height:30, background:'rgba(99,102,241,0.07)', border:'1px solid rgba(99,102,241,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
                       <Edit2 size={12} />
                     </button>
-                    <button onClick={() => delProd(p.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#ef4444' }}>
+                    <button onClick={() => delProd(p.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
                       <Trash2 size={12} />
                     </button>
                   </div>
@@ -393,10 +395,10 @@ export default function AdminDashboard() {
                     <div style={{ fontFamily:'var(--font-mono)', fontSize:'0.63rem', color:'var(--text-mute)', marginTop:2 }}>/{cat.slug} · order: {cat.sort_order}</div>
                   </div>
                   <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
-                    <button onClick={() => toggleCat(cat.id, cat.is_active)} className={`badge ${cat.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0.5rem' }}>
+                    <button onClick={() => toggleCat(cat.id, cat.is_active)} className={`badge ${cat.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0.5rem', fontSize:'0.65rem' }}>
                       {cat.is_active?'Active':'Off'}
                     </button>
-                    <button onClick={() => delCat(cat.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#ef4444' }}>
+                    <button onClick={() => delCat(cat.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
                       <Trash2 size={12} />
                     </button>
                   </div>
@@ -427,10 +429,10 @@ export default function AdminDashboard() {
                     </div>
                     <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
                       <span className={`badge ${pk.is_active?'badge-green':'badge-dim'}`}>{pk.is_active?'Active':'Off'}</span>
-                      <button onClick={() => { setEditPkg(pk); setKgProd(pk.product_id); setKgDays(pk.days); setKgPrice(Number(pk.price)); setKgActive(pk.is_active); setShowPkg(true); }} style={{ width:30, height:30, background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'var(--text-mute)' }}>
+                      <button onClick={() => { setEditPkg(pk); setKgProd(pk.product_id); setKgDays(pk.days); setKgPrice(Number(pk.price)); setKgActive(pk.is_active); setShowPkg(true); }} style={{ width:30, height:30, background:'rgba(99,102,241,0.07)', border:'1px solid rgba(99,102,241,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
                         <Edit2 size={12} />
                       </button>
-                      <button onClick={() => delPkg(pk.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#ef4444' }}>
+                      <button onClick={() => delPkg(pk.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
                         <Trash2 size={12} />
                       </button>
                     </div>
@@ -467,7 +469,7 @@ export default function AdminDashboard() {
                     <div style={{ display:'flex', gap:'0.35rem', flexShrink:0, alignItems:'center' }}>
                       <span className={`badge ${s.is_sold?'badge-red':'badge-green'}`}>{s.is_sold?'Sold':'Free'}</span>
                       {!s.is_sold && (
-                        <button onClick={() => delStock(s.id)} style={{ width:28, height:28, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:7, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#ef4444' }}>
+                        <button onClick={() => delStock(s.id)} style={{ width:28, height:28, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:7, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
                           <Trash2 size={11} />
                         </button>
                       )}
@@ -485,7 +487,7 @@ export default function AdminDashboard() {
             <div style={{ fontWeight:700, fontSize:'0.875rem', color:'var(--text)', marginBottom:'0.875rem' }}>Orders ({orders.length})</div>
             <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem' }}>
               {orders.map((o:any) => (
-                <div key={o.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem', padding:'0.75rem', background:'var(--bg-1)', border:'1px solid var(--line)', borderRadius:13 }}>
+                <div key={o.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem', padding:'0.75rem', background:'var(--bg-1)', border:'1px solid var(--line)', borderRadius:12 }}>
                   <div>
                     <div style={{ fontFamily:'var(--font-mono)', fontSize:'0.68rem', color:'var(--text-mute)' }}>#{o.id.slice(-5).toUpperCase()}</div>
                     <div style={{ fontSize:'0.78rem', fontWeight:600, color:'var(--text)', marginTop:1 }}>{o.users?.email?.split('@')[0] || o.user_id.slice(0,8)}</div>
@@ -541,7 +543,7 @@ export default function AdminDashboard() {
               <Field label="Primary Color">
                 <div style={{ display:'flex', gap:'0.5rem' }}>
                   <input style={{ ...inp, flex:1 }} type="text" value={brandColor} onChange={e=>setBrandColor(e.target.value)} placeholder="#10b981" />
-                  <input type="color" value={brandColor} onChange={e=>setBrandColor(e.target.value)} style={{ width:44, height:44, borderRadius:10, border:'none', cursor:'pointer', padding:2, background:'var(--input-bg)' }} />
+                  <input type="color" value={brandColor} onChange={e=>setBrandColor(e.target.value)} style={{ width:44, height:44, borderRadius:10, border:'none', cursor:'pointer', padding:2, background:'transparent' }} />
                 </div>
               </Field>
               <button type="submit" className="btn-accent" style={{ width:'100%' }}><Save size={14} /> Save Branding</button>
@@ -595,7 +597,7 @@ export default function AdminDashboard() {
         <Modal title={editPkg ? 'Edit Package' : 'Add Package'} onClose={() => setShowPkg(false)}>
           <form onSubmit={savePkg} style={{ display:'flex', flexDirection:'column', gap:'0.875rem' }}>
             <Field label="Product"><select style={sel} value={kgProd} onChange={e=>setKgProd(e.target.value)}>{products.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></Field>
-            <Field label="Duration"><select style={sel} value={kgDays} onChange={e=>setKgDays(Number(e.target.value))}>{[1,3,7,15,30].map(d=><option key={d} value={d}>{d} days</option>)}</select></Field>
+            <Field label="Duration (days)"><input style={inp} type="number" min={1} value={kgDays} onChange={e=>setKgDays(Number(e.target.value))} placeholder="e.g. 30" /></Field>
             <Field label="Price (৳)"><input style={inp} type="number" min={0} value={kgPrice} onChange={e=>setKgPrice(Number(e.target.value))} /></Field>
             <div style={{ display:'flex', alignItems:'center', gap:'0.5rem' }}>
               <input type="checkbox" checked={kgActive} onChange={e=>setKgActive(e.target.checked)} id="ka" style={{ width:16, height:16, accentColor:'var(--accent)' }} />
