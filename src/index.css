@@ -9,6 +9,7 @@
 
 /* ===== DARK THEME (default) — OLED-level deep ===== */
 :root, [data-theme="dark"] {
+  --mesh-opacity: 0.24;
   --bg:         #000000;
   --bg-1:       #080808;
   --bg-2:       #0a0a0a;
@@ -20,10 +21,10 @@
   --glass-2:    rgba(255,255,255,0.055);
   --line:       rgba(255,255,255,0.055);
   --line-2:     rgba(255,255,255,0.10);
-  --text:       #F2F2F4;
-  --text-dim:   #B0B0BA;
-  --text-mute:  #72727E;
-  --text-faint: #48484F;
+  --text:       #FFFFFF;
+  --text-dim:   #E4E4E7;   /* slate-200 */
+  --text-mute:  #A1A1AA;   /* slate-400 */
+  --text-faint: #52525B;   /* slate-600 */
   --card-bg:    #080808;
   --card-border: rgba(255,255,255,0.07);
   --nav-bg:     rgba(0,0,0,0.94);
@@ -33,7 +34,7 @@
   --surface-bg: rgba(255,255,255,0.025);
   --surface-border: rgba(255,255,255,0.07);
   --shadow-card: 0 4px 24px -4px rgba(0,0,0,0.85), 0 1px 0 rgba(255,255,255,0.035) inset;
-  --shadow-glow: 0 0 28px -4px rgba(16,185,129,0.28), 0 10px 40px -10px rgba(0,0,0,0.95);
+  --shadow-glow: 0 8px 24px -6px var(--accent-s), 0 10px 40px -10px rgba(0,0,0,0.95);
   --mesh-a: rgba(16,185,129,0.055);
   --mesh-b: rgba(99,102,241,0.04);
   --back-btn-bg: rgba(255,255,255,0.04);
@@ -49,6 +50,7 @@
 
 /* ===== LIGHT THEME ===== */
 [data-theme="light"] {
+  --mesh-opacity: 0.12;
   --bg:         #F5F6FA;
   --bg-1:       #FFFFFF;
   --bg-2:       #EDEEF4;
@@ -73,7 +75,7 @@
   --surface-bg: rgba(0,0,0,0.025);
   --surface-border: rgba(0,0,0,0.08);
   --shadow-card: 0 2px 16px -4px rgba(0,0,0,0.10), 0 1px 0 rgba(255,255,255,0.9) inset;
-  --shadow-glow: 0 0 24px -4px rgba(5,150,105,0.18), 0 8px 30px -8px rgba(0,0,0,0.12);
+  --shadow-glow: 0 6px 20px -6px var(--accent-s), 0 8px 30px -8px rgba(0,0,0,0.12);
   --mesh-a: rgba(5,150,105,0.04);
   --mesh-b: rgba(99,102,241,0.025);
   --back-btn-bg: rgba(0,0,0,0.04);

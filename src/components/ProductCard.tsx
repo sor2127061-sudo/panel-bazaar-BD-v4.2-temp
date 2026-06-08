@@ -110,7 +110,7 @@ export default function ProductCard({ product, minPrice, hasStock }: ProductCard
         }}>
           <div style={{
             fontFamily: 'var(--font-mono)', fontSize: '0.875rem', fontWeight: 700,
-            color: 'var(--accent)', textShadow: '0 0 14px var(--accent-s)',
+            color: 'var(--accent)', textShadow: 'none',
           }}>
             ৳{minPrice !== null ? minPrice.toLocaleString() : '--'}
           </div>
