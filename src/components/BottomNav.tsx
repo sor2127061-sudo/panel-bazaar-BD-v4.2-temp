@@ -23,7 +23,7 @@ export default function BottomNav() {
 
   return (
     <div className="bottom-nav" style={{ display: 'block' }}>
-      <style>{\`@media(min-width:768px){.bottom-nav{display:none!important;}}\`}</style>
+      <style dangerouslySetInnerHTML={{ __html: '@media(min-width:768px){.bottom-nav{display:none!important;}}' }} />
       <div style={{ display: 'flex', height: 60 }}>
         {tabs.map(({ label, path, icon: Icon }) => {
           const active = path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
