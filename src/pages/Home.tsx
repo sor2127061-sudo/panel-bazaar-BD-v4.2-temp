@@ -84,21 +84,21 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <div style={{ position: 'relative', overflow: 'hidden', padding: 'clamp(1.5rem,5vw,4rem) 1rem clamp(1.25rem,4vw,3rem)', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: '80vmax', height: '30vmax', background: 'radial-gradient(ellipse,var(--accent-s) 0%,transparent 65%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: '80vmax', height: '30vmax', background: 'radial-gradient(ellipse,var(--accent-s) 0%,t[...]
         <div style={{ position: 'relative', maxWidth: 640, margin: '0 auto' }}>
           {/* Eyebrow */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.25rem 0.75rem', background: 'var(--accent-s)', border: '1px solid var(--accent-g)', borderRadius: 999, marginBottom: '1rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.25rem 0.75rem', background: 'var(--accent-s)', border: '1px solid var(--accent-g)', borderRadius: 9[...]
             <Zap size={10} color="var(--accent)" />
-            <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>Instant Digital Delivery</span>
+            <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>Instant Digital Deliv[...]
           </div>
 
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.75rem,6vw,3.5rem)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text)', lineHeight: 1.1, margin: '0 0 0.75rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.75rem,6vw,3.5rem)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text)', lineHeight: 1.1[...]
             Panel Bazaar{' '}
             <span className="gradient-text-accent">BD</span>
           </h1>
 
           <p style={{ fontSize: 'clamp(0.78rem,2vw,0.9rem)', color: 'var(--text-mute)', maxWidth: 400, margin: '0 auto 1.25rem', lineHeight: 1.6 }}>
-            Premium streaming panels & digital keys — delivered instantly.
+            কোন প্রকার সমস্যা হলে ডাইরেক্টলি '01832538739' এই নাম্বারে সরাসরি যোগাযোগ করুন কল অথবা whatsapp
           </p>
 
           {/* Trust badges */}
@@ -134,7 +134,7 @@ export default function Home() {
               {cat === 'All' ? 'All' : cat}
             </button>
           ))}
-          <Link to="/bundles" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.35rem 0.75rem', background: 'var(--accent-s)', border: '1px dashed var(--accent-g)', borderRadius: 999, color: 'var(--accent)', fontSize: '0.72rem', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
+          <Link to="/bundles" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.35rem 0.75rem', background: 'var(--accent-s)', border: '1px dashed var(--accent-g)'[...]
             <ShoppingCart size={10} /> Bundles
           </Link>
         </div>
@@ -163,7 +163,7 @@ export default function Home() {
               gap: '0.75rem',
             }}>
               {/* 3 columns on wider mobile / tablet */}
-              <style>{`@media(min-width:480px){.prod-grid{grid-template-columns:repeat(3,1fr)!important;}}@media(min-width:768px){.prod-grid{grid-template-columns:repeat(4,1fr)!important;gap:1rem!important;}}`}</style>
+              <style>{`@media(min-width:480px){.prod-grid{grid-template-columns:repeat(3,1fr)!important;}}@media(min-width:768px){.prod-grid{grid-template-columns:repeat(4,1fr)!important;gap:1rem[...]
               {filtered.map(product => {
                 const m = productMetrics[product.id] || { minPrice: null, hasStock: false };
                 return <ProductCard key={product.id} product={product} minPrice={m.minPrice} hasStock={m.hasStock} demoUrl={extractYoutubeLink(product.description)} />;
