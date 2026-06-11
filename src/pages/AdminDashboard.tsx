@@ -6,20 +6,21 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { Product, Package, StockItem, Order, StockRequest as StockReqType, Category } from '../types';
-import { Settings, Package as Pkg, Database, ShoppingBag, HelpCircle, Sparkles, Plus, Edit2, Trash2, RefreshCw, Save, X, BarChart3, Layers, CheckCircle, Tag } from 'lucide-react';
+import { Product, Package, StockItem, Order, StockRequest as StockReqType, Category, Announcement } from '../types';
+import { Settings, Package as Pkg, Database, ShoppingBag, HelpCircle, Sparkles, Plus, Edit2, Trash2, RefreshCw, Save, X, BarChart3, Layers, CheckCircle, Tag, Megaphone } from 'lucide-react';
 
-type Tab = 'overview' | 'products' | 'categories' | 'packages' | 'stock' | 'orders' | 'requests' | 'branding';
+type Tab = 'overview' | 'products' | 'categories' | 'packages' | 'stock' | 'orders' | 'requests' | 'announcements' | 'branding';
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: 'overview',    label: 'ওভারভিউ',    icon: <BarChart3 size={15} /> },
-  { key: 'products',    label: 'প্রোডাক্ট',  icon: <Layers size={15} /> },
-  { key: 'categories',  label: 'ক্যাটাগরি',  icon: <Tag size={15} /> },
-  { key: 'packages',    label: 'প্যাকেজ',    icon: <Pkg size={15} /> },
-  { key: 'stock',       label: 'স্টক',       icon: <Database size={15} /> },
-  { key: 'orders',      label: 'অর্ডার',     icon: <ShoppingBag size={15} /> },
-  { key: 'requests',    label: 'রিকোয়েস্ট', icon: <HelpCircle size={15} /> },
-  { key: 'branding',    label: 'ব্র্যান্ড',   icon: <Sparkles size={15} /> },
+  { key: 'overview',      label: 'ওভারভিউ',      icon: <BarChart3 size={15} /> },
+  { key: 'products',      label: 'প্রোডাক্ট',    icon: <Layers size={15} /> },
+  { key: 'categories',    label: 'ক্যাটাগরি',    icon: <Tag size={15} /> },
+  { key: 'packages',      label: 'প্যাকেজ',      icon: <Pkg size={15} /> },
+  { key: 'stock',         label: 'স্টক',         icon: <Database size={15} /> },
+  { key: 'orders',        label: 'অর্ডার',       icon: <ShoppingBag size={15} /> },
+  { key: 'requests',      label: 'রিকোয়েস্ট',   icon: <HelpCircle size={15} /> },
+  { key: 'announcements', label: 'ঘোষণা',        icon: <Megaphone size={15} /> },
+  { key: 'branding',      label: 'ব্র্যান্ড',     icon: <Sparkles size={15} /> },
 ];
 
 function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
@@ -28,7 +29,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
       <div className="modal-box">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.125rem', borderBottom: '1px solid var(--line)' }}>
           <span style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text)' }}>{title}</span>
-          <button onClick={onClose} style={{ width: 28, height: 28, background: 'var(--glass)', border: '1px solid var(--line-2)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <button onClick={onClose} style={{ width: 28, height: 28, background: 'var(--glass)', border: '1px solid var(--line-2)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyCo[...]
             <X size={16} />
           </button>
         </div>
@@ -38,7 +39,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
   );
 }
 
-const inp: React.CSSProperties = { width: '100%', padding: '0.75rem 0.875rem', background: 'var(--input-bg)', border: '1px solid var(--line-2)', borderRadius: 11, color: 'var(--text)', fontFamily: 'inherit' };
+const inp: React.CSSProperties = { width: '100%', padding: '0.75rem 0.875rem', background: 'var(--input-bg)', border: '1px solid var(--line-2)', borderRadius: 11, color: 'var(--text)', fontFamily:[...]
 const ta: React.CSSProperties = { ...inp, resize: 'vertical', minHeight: 160, lineHeight: 1.6, fontSize: 14 };
 const sel: React.CSSProperties = { ...inp };
 
@@ -69,6 +70,7 @@ export default function AdminDashboard() {
   const [stockItems, setStockItems] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [requests, setRequests] = useState<any[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [brandName, setBrandName] = useState('');
   const [brandLogo, setBrandLogo] = useState('');
   const [brandColor, setBrandColor] = useState('#10b981');
@@ -99,12 +101,20 @@ export default function AdminDashboard() {
   const [skKey, setSkKey] = useState(''); const [skUser, setSkUser] = useState(''); const [skPass, setSkPass] = useState('');
   const [skBulk, setSkBulk] = useState(''); const [skBulkMode, setSkBulkMode] = useState(false);
 
+  // Announcement modal
+  const [showAnn, setShowAnn] = useState(false);
+  const [editAnn, setEditAnn] = useState<Announcement | null>(null);
+  const [annTitle, setAnnTitle] = useState('');
+  const [annMessage, setAnnMessage] = useState('');
+  const [annType, setAnnType] = useState<any>('info');
+  const [annActive, setAnnActive] = useState(true);
+
   useEffect(() => {
     if (!dbUser || dbUser.role !== 'admin') return;
     (async () => {
       setLoading(true);
       try {
-        const [{ data: p }, { data: pk }, { data: s }, { data: o }, { data: r }, { data: ss }, { data: cats }] = await Promise.all([
+        const [{ data: p }, { data: pk }, { data: s }, { data: o }, { data: r }, { data: ss }, { data: cats }, { data: anns }] = await Promise.all([
           supabase.from('products').select('*').order('sort_order', { ascending: true }),
           supabase.from('packages').select('*'),
           supabase.from('stock_items').select('*, packages:package_id(days, products:product_id(name))').order('created_at', { ascending: false }),
@@ -112,9 +122,10 @@ export default function AdminDashboard() {
           supabase.from('stock_requests').select('*, users:user_id(email)').order('created_at', { ascending: false }),
           supabase.from('site_settings').select('*'),
           supabase.from('categories').select('*').order('sort_order', { ascending: true }),
+          supabase.from('announcements').select('*').order('created_at', { ascending: false }),
         ]);
         setProducts(p || []); setPackages(pk || []); setStockItems(s || []);
-        setOrders(o || []); setRequests(r || []); setCategories(cats || []);
+        setOrders(o || []); setRequests(r || []); setCategories(cats || []); setAnnouncements(anns || []);
         if (ss?.length) {
           const row = ss[0];
           if ('site_name' in row) { setBrandName(row.site_name||''); setBrandLogo(row.site_logo_url||''); setBrandColor(row.primary_color||'#10b981'); }
@@ -233,6 +244,29 @@ export default function AdminDashboard() {
     if (error) showError(error.message); else { showSuccess('Deleted'); setReload(r => r + 1); }
   };
 
+  const saveAnn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!annTitle.trim()) { showError('Announcement title required'); return; }
+    if (!annMessage.trim()) { showError('Announcement message required'); return; }
+    try {
+      const pl = { title: annTitle.trim(), message: annMessage.trim(), type: annType, is_active: annActive };
+      if (editAnn) { const {error} = await supabase.from('announcements').update(pl).eq('id', editAnn.id); if(error) throw error; showSuccess('Announcement updated!'); }
+      else { const {error} = await supabase.from('announcements').insert([pl]); if(error) throw error; showSuccess('Announcement added!'); }
+      setShowAnn(false); setReload(r=>r+1);
+    } catch(e:any){ showError(e.message); }
+  };
+
+  const toggleAnn = async (id: string, cur: boolean) => {
+    const {error} = await supabase.from('announcements').update({is_active:!cur}).eq('id',id);
+    if(error) showError(error.message); else { showSuccess(`Announcement ${!cur?'activated':'deactivated'}`); setReload(r=>r+1); }
+  };
+
+  const delAnn = async (id: string) => {
+    if (!confirm('Delete this announcement?')) return;
+    const {error} = await supabase.from('announcements').delete().eq('id',id);
+    if(error) showError(error.message); else { showSuccess('Deleted'); setReload(r=>r+1); }
+  };
+
   const saveBrand = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!brandName.trim()) { showError('সাইটের নাম দিন'); return; }
@@ -274,7 +308,7 @@ export default function AdminDashboard() {
         {/* Header */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1rem' }}>
           <div style={{ display:'flex', alignItems:'center', gap:'0.75rem' }}>
-            <div style={{ width:40, height:40, borderRadius:12, background:'var(--accent-s)', border:'1px solid var(--accent-g)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+            <div style={{ width:40, height:40, borderRadius:12, background:'var(--accent-s)', border:'1px solid var(--accent-g)', display:'flex', alignItems:'center', justifyContent:'center', fle[...]
               <Settings size={18} color="var(--accent)" />
             </div>
             <div>
@@ -285,7 +319,7 @@ export default function AdminDashboard() {
           <div style={{ display:'flex', gap:'0.4rem' }}>
             <button
               onClick={() => window.scrollTo({top:0,behavior:'smooth'})}
-              style={{ padding:'0.45rem 0.7rem', background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:9, fontSize:'0.68rem', color:'var(--text-dim)', cursor:'pointer', display:'flex', alignItems:'center', gap:'0.3rem' }}
+              style={{ padding:'0.45rem 0.7rem', background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:9, fontSize:'0.68rem', color:'var(--text-dim)', cursor:'pointer', displa[...]
             >
               <RefreshCw size={12} /> রিফ্রেশ
             </button>
@@ -307,7 +341,7 @@ export default function AdminDashboard() {
         {activeTab === 'overview' && (
           <div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:'0.75rem', marginBottom:'1.25rem' }}>
-              <style>{`@media(min-width:480px){.stat-grid{grid-template-columns:repeat(3,1fr)!important;}}@media(min-width:768px){.stat-grid{grid-template-columns:repeat(6,1fr)!important;}}`}</style>
+              <style>{`@media(min-width:480px){.stat-grid{grid-template-columns:repeat(3,1fr)!important;}}@media(min-width:768px){.stat-grid{grid-template-columns:repeat(6,1fr)!important;}}`}</st[...]
               {[
                 {l:'Revenue',    v:`৳${stats.revenue.toLocaleString()}`, c:'var(--accent)'},
                 {l:'Products',   v:stats.products,   c:'#818cf8'},
@@ -317,7 +351,7 @@ export default function AdminDashboard() {
                 {l:'Requests',   v:stats.pending,     c:'#f59e0b'},
               ].map(({l,v,c}) => (
                 <div key={l} className="stat-card">
-                  <div style={{ fontSize:'0.58rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--text-mute)', fontFamily:'var(--font-mono)', marginBottom:'0.35rem' }}>{l}</div>
+                  <div style={{ fontSize:'0.58rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--text-mute)', fontFamily:'var(--font-mono)', marginBottom:'0.35re[...]
                   <div style={{ fontFamily:'var(--font-mono)', fontSize:'1.35rem', fontWeight:700, color:c }}>{v}</div>
                 </div>
               ))}
@@ -348,7 +382,7 @@ export default function AdminDashboard() {
           <div>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.875rem' }}>
               <span style={{ fontWeight:700, fontSize:'0.875rem', color:'var(--text)' }}>Products ({products.length})</span>
-              <button onClick={() => { setEditProd(null); setPName(''); setPDesc(''); setPCat(categories[0]?.name || ''); setPImg(''); setPActive(true); setPSort(0); setShowProd(true); }} className="btn-accent" style={{ fontSize:'0.72rem', padding:'0.45rem 0.875rem' }}>
+              <button onClick={() => { setEditProd(null); setPName(''); setPDesc(''); setPCat(categories[0]?.name || ''); setPImg(''); setPActive(true); setPSort(0); setShowProd(true); }} classNa[...]
                 <Plus size={13} /> Add
               </button>
             </div>
@@ -361,13 +395,13 @@ export default function AdminDashboard() {
                     <span className="badge badge-dim" style={{ marginTop:2 }}>{p.category}</span>
                   </div>
                   <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
-                    <button onClick={() => toggleProd(p.id, p.is_active)} className={`badge ${p.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0.5rem', fontSize:'0.65rem' }}>
+                    <button onClick={() => toggleProd(p.id, p.is_active)} className={`badge ${p.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0[...]
                       {p.is_active?'On':'Off'}
                     </button>
-                    <button onClick={() => { setEditProd(p); setPName(p.name); setPDesc(p.description||''); setPCat(p.category); setPImg(p.image_url||''); setPActive(p.is_active); setPSort(p.sort_order); setShowProd(true); }} style={{ width:30, height:30, background:'rgba(99,102,241,0.07)', border:'1px solid rgba(99,102,241,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                    <button onClick={() => { setEditProd(p); setPName(p.name); setPDesc(p.description||''); setPCat(p.category); setPImg(p.image_url||''); setPActive(p.is_active); setPSort(p.sort[...]
                       <Edit2 size={12} />
                     </button>
-                    <button onClick={() => delProd(p.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                    <button onClick={() => delProd(p.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex',[...]
                       <Trash2 size={12} />
                     </button>
                   </div>
@@ -395,10 +429,10 @@ export default function AdminDashboard() {
                     <div style={{ fontFamily:'var(--font-mono)', fontSize:'0.63rem', color:'var(--text-mute)', marginTop:2 }}>/{cat.slug} · order: {cat.sort_order}</div>
                   </div>
                   <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
-                    <button onClick={() => toggleCat(cat.id, cat.is_active)} className={`badge ${cat.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0.5rem', fontSize:'0.65rem' }}>
+                    <button onClick={() => toggleCat(cat.id, cat.is_active)} className={`badge ${cat.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25[...]
                       {cat.is_active?'Active':'Off'}
                     </button>
-                    <button onClick={() => delCat(cat.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                    <button onClick={() => delCat(cat.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex'[...]
                       <Trash2 size={12} />
                     </button>
                   </div>
@@ -414,7 +448,7 @@ export default function AdminDashboard() {
           <div>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.875rem' }}>
               <span style={{ fontWeight:700, fontSize:'0.875rem', color:'var(--text)' }}>Packages ({packages.length})</span>
-              <button onClick={() => { setEditPkg(null); setKgProd(products[0]?.id||''); setKgDays(30); setKgPrice(0); setKgActive(true); setShowPkg(true); }} className="btn-accent" style={{ fontSize:'0.72rem', padding:'0.45rem 0.875rem' }}>
+              <button onClick={() => { setEditPkg(null); setKgProd(products[0]?.id||''); setKgDays(30); setKgPrice(0); setKgActive(true); setShowPkg(true); }} className="btn-accent" style={{ font[...]
                 <Plus size={13} /> Add
               </button>
             </div>
@@ -429,10 +463,10 @@ export default function AdminDashboard() {
                     </div>
                     <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
                       <span className={`badge ${pk.is_active?'badge-green':'badge-dim'}`}>{pk.is_active?'Active':'Off'}</span>
-                      <button onClick={() => { setEditPkg(pk); setKgProd(pk.product_id); setKgDays(pk.days); setKgPrice(Number(pk.price)); setKgActive(pk.is_active); setShowPkg(true); }} style={{ width:30, height:30, background:'rgba(99,102,241,0.07)', border:'1px solid rgba(99,102,241,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                      <button onClick={() => { setEditPkg(pk); setKgProd(pk.product_id); setKgDays(pk.days); setKgPrice(Number(pk.price)); setKgActive(pk.is_active); setShowPkg(true); }} style={{[...]
                         <Edit2 size={12} />
                       </button>
-                      <button onClick={() => delPkg(pk.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                      <button onClick={() => delPkg(pk.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex[...]
                         <Trash2 size={12} />
                       </button>
                     </div>
@@ -452,7 +486,7 @@ export default function AdminDashboard() {
                 <span className="badge badge-green">{stats.available} available</span>
                 <span className="badge badge-red" style={{ marginLeft:4 }}>{stats.sold} sold</span>
               </div>
-              <button onClick={() => { setSkPkg(packages[0]?.id||''); setSkType('key'); setSkKey(''); setSkUser(''); setSkPass(''); setSkBulk(''); setSkBulkMode(false); setShowStock(true); }} className="btn-accent" style={{ fontSize:'0.72rem', padding:'0.45rem 0.875rem' }}>
+              <button onClick={() => { setSkPkg(packages[0]?.id||''); setSkType('key'); setSkKey(''); setSkUser(''); setSkPass(''); setSkBulk(''); setSkBulkMode(false); setShowStock(true); }} cla[...]
                 <Plus size={13} /> Add
               </button>
             </div>
@@ -461,7 +495,7 @@ export default function AdminDashboard() {
                 const pkg = s.packages;
                 const val = s.item_type==='key' ? s.key_value : s.username ? `${s.username}/${s.password}` : s.key_value;
                 return (
-                  <div key={s.id} style={{ display:'flex', alignItems:'center', gap:'0.6rem', padding:'0.625rem 0.875rem', background:'var(--bg-1)', border:'1px solid var(--line)', borderRadius:12 }}>
+                  <div key={s.id} style={{ display:'flex', alignItems:'center', gap:'0.6rem', padding:'0.625rem 0.875rem', background:'var(--bg-1)', border:'1px solid var(--line)', borderRadius:1[...]
                     <div style={{ flex:1, minWidth:0 }}>
                       <div style={{ fontFamily:'var(--font-mono)', fontSize:'0.72rem', color:'var(--accent)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{val}</div>
                       <div style={{ fontSize:'0.63rem', color:'var(--text-mute)', marginTop:1 }}>{pkg?.products?.name} · {pkg?.days}d · {s.item_type}</div>
@@ -469,7 +503,7 @@ export default function AdminDashboard() {
                     <div style={{ display:'flex', gap:'0.35rem', flexShrink:0, alignItems:'center' }}>
                       <span className={`badge ${s.is_sold?'badge-red':'badge-green'}`}>{s.is_sold?'Sold':'Free'}</span>
                       {!s.is_sold && (
-                        <button onClick={() => delStock(s.id)} style={{ width:28, height:28, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:7, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                        <button onClick={() => delStock(s.id)} style={{ width:28, height:28, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:7, display:'f[...]
                           <Trash2 size={11} />
                         </button>
                       )}
@@ -487,7 +521,7 @@ export default function AdminDashboard() {
             <div style={{ fontWeight:700, fontSize:'0.875rem', color:'var(--text)', marginBottom:'0.875rem' }}>Orders ({orders.length})</div>
             <div style={{ display:'flex', flexDirection:'column', gap:'0.4rem' }}>
               {orders.map((o:any) => (
-                <div key={o.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem', padding:'0.75rem', background:'var(--bg-1)', border:'1px solid var(--line)', borderRadius:12 }}>
+                <div key={o.id} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem', padding:'0.75rem', background:'var(--bg-1)', border:'1px solid var(--l[...]
                   <div>
                     <div style={{ fontFamily:'var(--font-mono)', fontSize:'0.68rem', color:'var(--text-mute)' }}>#{o.id.slice(-5).toUpperCase()}</div>
                     <div style={{ fontSize:'0.78rem', fontWeight:600, color:'var(--text)', marginTop:1 }}>{o.users?.email?.split('@')[0] || o.user_id.slice(0,8)}</div>
@@ -533,6 +567,40 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {/* ── ANNOUNCEMENTS ── */}
+        {activeTab === 'announcements' && (
+          <div>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.875rem' }}>
+              <span style={{ fontWeight:700, fontSize:'0.875rem', color:'var(--text)' }}>Announcements ({announcements.length})</span>
+              <button onClick={() => { setEditAnn(null); setAnnTitle(''); setAnnMessage(''); setAnnType('info'); setAnnActive(true); setShowAnn(true); }} className="btn-accent" style={{ fontSize:'0.72rem', padding:'0.45rem 0.875rem' }}>
+                <Plus size={13} /> Add
+              </button>
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', gap:'0.5rem' }}>
+              {announcements.map(a => (
+                <div key={a.id} style={{ display:'flex', alignItems:'center', gap:'0.75rem', padding:'0.75rem', background:'var(--bg-1)', border:'1px solid var(--line)', borderRadius:14 }}>
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ fontWeight:700, fontSize:'0.8rem', color:'var(--text)' }}>{a.title}</div>
+                    <div style={{ fontSize:'0.65rem', color:'var(--text-mute)', marginTop:2 }}>{a.message.substring(0, 80)}...</div>
+                  </div>
+                  <div style={{ display:'flex', gap:'0.35rem', flexShrink:0 }}>
+                    <button onClick={() => toggleAnn(a.id, a.is_active)} className={`badge ${a.is_active?'badge-green':'badge-dim'}`} style={{ cursor:'pointer', border:'none', padding:'0.25rem 0[...]
+                      {a.is_active?'On':'Off'}
+                    </button>
+                    <button onClick={() => { setEditAnn(a); setAnnTitle(a.title); setAnnMessage(a.message); setAnnType(a.type); setAnnActive(a.is_active); setShowAnn(true); }} style={{ width:30, height:30, background:'var(--glass)', border:'1px solid var(--line-2)', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'var(--text-dim)' }}>
+                      <Edit2 size={12} />
+                    </button>
+                    <button onClick={() => delAnn(a.id)} style={{ width:30, height:30, background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.18)', borderRadius:8, display:'flex',[...]
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {announcements.length === 0 && <div style={{ padding:'2rem', textAlign:'center', color:'var(--text-mute)', fontSize:'0.8rem' }}>No announcements yet.</div>}
+            </div>
+          </div>
+        )}
+
         {/* ── BRANDING ── */}
         {activeTab === 'branding' && (
           <div style={{ maxWidth:460 }}>
@@ -543,7 +611,7 @@ export default function AdminDashboard() {
               <Field label="Primary Color">
                 <div style={{ display:'flex', gap:'0.5rem' }}>
                   <input style={{ ...inp, flex:1 }} type="text" value={brandColor} onChange={e=>setBrandColor(e.target.value)} placeholder="#10b981" />
-                  <input type="color" value={brandColor} onChange={e=>setBrandColor(e.target.value)} style={{ width:44, height:44, borderRadius:10, border:'none', cursor:'pointer', padding:2, background:'transparent' }} />
+                  <input type="color" value={brandColor} onChange={e=>setBrandColor(e.target.value)} style={{ width:44, height:44, borderRadius:10, border:'none', cursor:'pointer', padding:2, bac[...]
                 </div>
               </Field>
               <button type="submit" className="btn-accent" style={{ width:'100%' }}><Save size={14} /> Save Branding</button>
@@ -620,7 +688,7 @@ export default function AdminDashboard() {
                 {packages.map(pk => { const prod = products.find(p=>p.id===pk.product_id); return <option key={pk.id} value={pk.id}>{prod?.name} — {pk.days}d — ৳{pk.price}</option>; })}
               </select>
             </Field>
-            <Field label="Type"><select style={sel} value={skType} onChange={e=>setSkType(e.target.value)}><option value="key">License Key</option><option value="credentials">Credentials</option><option value="custom">Custom</option></select></Field>
+            <Field label="Type"><select style={sel} value={skType} onChange={e=>setSkType(e.target.value)}><option value="key">License Key</option><option value="credentials">Credentials</option>[...]
             <div style={{ display:'flex', alignItems:'center', gap:'0.5rem' }}>
               <input type="checkbox" checked={skBulkMode} onChange={e=>setSkBulkMode(e.target.checked)} id="sb" style={{ width:16, height:16, accentColor:'var(--accent)' }} />
               <label htmlFor="sb" style={{ fontSize:'0.78rem', color:'var(--text-dim)', cursor:'pointer' }}>Bulk insert (one per line)</label>
@@ -628,12 +696,31 @@ export default function AdminDashboard() {
             {skBulkMode
               ? <Field label="Values (one per line)"><textarea style={{ ...ta, minHeight:100 }} value={skBulk} onChange={e=>setSkBulk(e.target.value)} placeholder={"KEY1\nKEY2\nKEY3"} /></Field>
               : skType === 'credentials'
-                ? <><Field label="Username"><input style={inp} type="text" value={skUser} onChange={e=>setSkUser(e.target.value)} /></Field><Field label="Password"><input style={inp} type="text" value={skPass} onChange={e=>setSkPass(e.target.value)} /></Field></>
+                ? <><Field label="Username"><input style={inp} type="text" value={skUser} onChange={e=>setSkUser(e.target.value)} /></Field><Field label="Password"><input style={inp} type="text" [...]
                 : <Field label="Key Value"><input style={inp} type="text" value={skKey} onChange={e=>setSkKey(e.target.value)} placeholder="XXXX-XXXX-XXXX" /></Field>
             }
             <div style={{ display:'flex', gap:'0.5rem' }}>
               <button type="button" onClick={() => setShowStock(false)} className="btn-ghost" style={{ flex:1, fontSize:'0.78rem' }}>Cancel</button>
               <button type="submit" className="btn-accent" style={{ flex:1, fontSize:'0.78rem' }}><Plus size={13} /> Add Stock</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+
+      {/* ── Announcement Modal ── */}
+      {showAnn && (
+        <Modal title={editAnn ? 'Edit Announcement' : 'Add Announcement'} onClose={() => setShowAnn(false)}>
+          <form onSubmit={saveAnn} style={{ display:'flex', flexDirection:'column', gap:'0.875rem' }}>
+            <Field label="Title"><input style={inp} type="text" value={annTitle} onChange={e=>setAnnTitle(e.target.value)} required /></Field>
+            <Field label="Message"><textarea style={ta} value={annMessage} onChange={e=>setAnnMessage(e.target.value)} required /></Field>
+            <Field label="Type"><select style={sel} value={annType} onChange={e=>setAnnType(e.target.value)}><option value="info">Info</option><option value="warning">Warning</option><option value="emergency">Emergency</option></select></Field>
+            <div style={{ display:'flex', alignItems:'center', gap:'0.5rem' }}>
+              <input type="checkbox" checked={annActive} onChange={e=>setAnnActive(e.target.checked)} id="aa" style={{ width:16, height:16, accentColor:'var(--accent)' }} />
+              <label htmlFor="aa" style={{ fontSize:'0.82rem', color:'var(--text-dim)', cursor:'pointer' }}>Active (visible to users)</label>
+            </div>
+            <div style={{ display:'flex', gap:'0.5rem' }}>
+              <button type="button" onClick={() => setShowAnn(false)} className="btn-ghost" style={{ flex:1, fontSize:'0.78rem' }}>Cancel</button>
+              <button type="submit" className="btn-accent" style={{ flex:1, fontSize:'0.78rem' }}><Save size={13} /> {editAnn?'Update':'Create'}</button>
             </div>
           </form>
         </Modal>
