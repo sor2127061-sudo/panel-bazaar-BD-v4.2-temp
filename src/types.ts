@@ -138,6 +138,15 @@ export interface SiteSettings {
   primary_color: string;
 }
 
+export interface Announcement {
+  id: string;
+  title: string;
+  message: string;
+  type: 'info' | 'warning' | 'emergency';
+  is_active: boolean;
+  created_at: string;
+}
+
 export interface ToastMessage {
   id: string;
   type: 'success' | 'error' | 'info';
